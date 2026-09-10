@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import ReactDOM from 'react-dom/client'
 import { theme } from '#/lib'
+import { ReloadPrompt } from '#/components/ReloadPrompt'
 import { routeTree } from './routeTree.gen'
 
 const router = createRouter({
@@ -26,6 +27,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <MantineProvider theme={theme}>
       <RouterProvider router={router} />
+      <ReloadPrompt />
     </MantineProvider>,
   )
 }
