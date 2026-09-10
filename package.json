@@ -19,6 +19,7 @@
     "@mantine/core": "^9.6.1",
     "@mantine/hooks": "^9.6.1",
     "@phosphor-icons/react": "^2.1.10",
+    "@supabase/supabase-js": "^2.116.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
