@@ -1,7 +1,12 @@
 // Tipe baris tabel Supabase. Mirror dari
 // `supabase/migrations/0001_init.sql` — update manual jika skema berubah
 // (atau generate otomatis via `supabase gen types` bila memakai Supabase CLI).
-export interface BillRow {
+//
+// PENTING: pakai `type`, bukan `interface`. supabase-js/postgrest-js
+// mensyaratkan Row/Insert/Update assignable ke `Record<string, unknown>`,
+// dan interface tidak mendapat implicit index signature (query me-return
+// `never` bila dilanggar).
+export type BillRow = {
   id: string
   title: string
   tax_percent: number
@@ -11,7 +16,7 @@ export interface BillRow {
   updated_at: string
 }
 
-export interface BillMemberRow {
+export type BillMemberRow = {
   id: string
   bill_id: string
   name: string
@@ -19,7 +24,7 @@ export interface BillMemberRow {
   created_at: string
 }
 
-export interface BillItemRow {
+export type BillItemRow = {
   id: string
   bill_id: string
   name: string
@@ -30,7 +35,7 @@ export interface BillItemRow {
   created_at: string
 }
 
-export interface GitlabProfileRow {
+export type GitlabProfileRow = {
   id: string
   label: string
   instance_url: string
@@ -40,7 +45,7 @@ export interface GitlabProfileRow {
   updated_at: string
 }
 
-export interface TimesheetEntryRow {
+export type TimesheetEntryRow = {
   id: string
   date: string
   summary: string
@@ -51,7 +56,7 @@ export interface TimesheetEntryRow {
 }
 
 // Generic `Database` untuk `createClient<Database>()` agar query ter-typecheck.
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       bills: {
@@ -112,10 +117,7 @@ export interface Database {
       }
       timesheet_entries: {
         Row: TimesheetEntryRow
-        Insert: Omit<
-          TimesheetEntryRow,
-          'id' | 'created_at' | 'updated_at'
-        > & {
+        Insert: Omit<TimesheetEntryRow, 'id' | 'created_at' | 'updated_at'> & {
           id?: string
           created_at?: string
           updated_at?: string
@@ -133,9 +135,17 @@ export interface Database {
         ]
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-    CompositeTypes: Record<string, never>
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
 }

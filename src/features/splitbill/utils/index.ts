@@ -84,3 +84,18 @@ export function formatSplitMessage(
   rows.push(`*Total: ${formatIDR(summary.grandTotal)}*`)
   return rows.join('\n')
 }
+
+const billDateFormatter = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+})
+
+/** Format timestamp ISO dari Supabase ke tampilan id-ID. */
+export function formatBillDate(value: string): string {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return billDateFormatter.format(date)
+}

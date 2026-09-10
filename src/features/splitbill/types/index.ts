@@ -37,3 +37,31 @@ export interface SplitSummary {
   grandTotal: number
   shares: MemberShare[]
 }
+
+/** State bill yang siap disimpan ke Supabase. */
+export interface BillDraft {
+  title: string
+  members: BillMember[]
+  items: BillItem[]
+  settings: BillSettings
+}
+
+/** Satu bill penuh yang dimuat dari Supabase. */
+export interface BillDetail extends BillDraft {
+  id: string
+  createdAt: string
+  updatedAt: string
+}
+
+/** Ringkasan bill untuk daftar riwayat (tanpa members/items). */
+export interface SavedBillSummary {
+  id: string
+  title: string
+  taxPercent: number
+  servicePercent: number
+  discount: number
+  memberCount: number
+  itemCount: number
+  createdAt: string
+  updatedAt: string
+}

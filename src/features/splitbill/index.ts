@@ -1,14 +1,28 @@
 // Public API feature splitbill
 // Route hanya boleh import dari sini, jangan deep-import ke dalam folder.
-export { useSplitBill } from '#/features/splitbill/hooks'
+export { useSavedBills, useSplitBill } from '#/features/splitbill/hooks'
 export type { UseSplitBill } from '#/features/splitbill/hooks'
-export { calculateSplit, formatSplitMessage } from '#/features/splitbill/utils'
+export {
+  createBill,
+  deleteBill,
+  getBillDetail,
+  listBills,
+  updateBill,
+} from '#/features/splitbill/services'
+export {
+  calculateSplit,
+  formatBillDate,
+  formatSplitMessage,
+} from '#/features/splitbill/utils'
 export type {
+  BillDetail,
+  BillDraft,
   BillItem,
   BillMember,
   BillSettings,
   MemberId,
   MemberShare,
+  SavedBillSummary,
   SplitSummary,
 } from '#/features/splitbill/types'
 export {
