@@ -1,0 +1,28 @@
+/* Input ala shadcn: border halus, fokus border menyala + ring lembut.
+   Error/success sengaja dikecualikan agar merah/hijau bawaan tetap menang. */
+.input {
+  background-color: var(--mantine-color-white);
+  box-shadow: var(--mantine-shadow-xs);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.input:not([data-error]):not([data-success]) {
+  border-color: var(--mantine-color-gray-3);
+}
+
+.input::placeholder {
+  color: var(--mantine-color-gray-5);
+}
+
+.input:not([data-error]):not([data-success]):focus {
+  border-color: var(--mantine-primary-color-filled);
+}
+
+.input:not([data-error]):not([data-success]):focus-visible {
+  outline: none;
+  border-color: var(--mantine-primary-color-filled);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--mantine-primary-color-filled) 20%, transparent);
+}

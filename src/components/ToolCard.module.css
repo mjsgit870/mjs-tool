@@ -1,0 +1,18 @@
+/* Efek hover halus untuk kartu tool: terangkat sedikit + border menyala.
+   Semua token (shadow, warna, radius) ikut tema Mantine. */
+.card {
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mantine-shadow-sm);
+  border-color: var(--mantine-color-indigo-3);
+}
+
+.card:active {
+  transform: translateY(0);
+}

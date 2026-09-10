@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+/* Ring fokus 3px yang lebih tegas namun tetap kalem (default Mantine 2px). */
+.mantine-focus-auto:focus-visible,
+.mantine-focus-always:focus {
+  outline-width: 3px;
+}
