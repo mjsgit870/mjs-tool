@@ -57,10 +57,11 @@ export function calculateSplit(
 export function formatSplitMessage(
   summary: SplitSummary,
   settings: BillSettings,
+  title = 'Split Bill',
 ): string {
   const line = '--------------------------'
   const rows = [
-    '*Split Bill*',
+    `*${title.trim() || 'Split Bill'}*`,
     line,
     ...summary.shares.map(
       ({ member, total }) => `${member.name}: ${formatIDR(total)}`,
@@ -98,4 +99,67 @@ export function formatBillDate(value: string): string {
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return value
   return billDateFormatter.format(date)
+}
+
+/** Waktu relatif id-ID: "baru saja", "5 mnt lalu", "3 jam lalu", dst. */
+export function formatRelativeTime(value: string): string {
+  const date = new Date(value).getTime()
+  if (Number.isNaN(date)) return value
+  const diffMs = Date.now() - date
+  const minute = 60_000
+  const hour = 60 * minute
+  const day = 24 * hour
+  if (diffMs < minute) return 'baru saja'
+  if (diffMs < hour) {
+    const m = Math.floor(diffMs / minute)
+    return `${m} mnt lalu`
+  }
+  if (diffMs < day) {
+    const h = Math.floor(diffMs / hour)
+    return `${h} jam lalu`
+  }
+  if (diffMs < 7 * day) {
+    const d = Math.floor(diffMs / day)
+    return `${d} hari lalu`
+  }
+  return formatBillDate(value)
+}
+
+const AVATAR_COLORS = [
+  'teal',
+  'indigo',
+  'orange',
+  'grape',
+  'blue',
+  'pink',
+  'cyan',
+  'lime',
+] as const
+
+/** Warna avatar deterministik dari nama (stabil antar render). */
+export function memberColor(name: string): string {
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0
+  }
+  const idx = Math.abs(hash) % AVATAR_COLORS.length
+  return AVATAR_COLORS[idx]
+}
+
+/** Inisial 1-2 huruf untuk avatar. */
+export function memberInitials(name: string): string {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length === 1) return (parts[0]?.slice(0, 2) ?? '?').toUpperCase()
+  return (
+    (parts[0]?.[0] ?? '') + (parts[parts.length - 1]?.[0] ?? '')
+  ).toUpperCase()
+}
+
+/** Pecah input bulk "Budi, Sari dan Andi" jadi daftar nama bersih. */
+export function parseBulkNames(raw: string): string[] {
+  return raw
+    .split(/[,;\n]+|\s+dan\s+/i)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 50)
 }

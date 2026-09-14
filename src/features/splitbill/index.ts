@@ -12,7 +12,11 @@ export {
 export {
   calculateSplit,
   formatBillDate,
+  formatRelativeTime,
   formatSplitMessage,
+  memberColor,
+  memberInitials,
+  parseBulkNames,
 } from '#/features/splitbill/utils'
 export type {
   BillDetail,
@@ -26,6 +30,8 @@ export type {
   SplitSummary,
 } from '#/features/splitbill/types'
 export {
+  BillDetailDrawer,
+  BillHistory,
   BillResult,
   BillSettingsForm,
   ItemManager,

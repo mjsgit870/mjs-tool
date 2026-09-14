@@ -6,11 +6,13 @@ import type { BillSettings, SplitSummary } from '#/features/splitbill/types'
 interface ShareBillProps {
   summary: SplitSummary
   settings: BillSettings
+  title: string
 }
 
-export function ShareBill({ summary, settings }: ShareBillProps) {
-  const message = formatSplitMessage(summary, settings)
+export function ShareBill({ summary, settings, title }: ShareBillProps) {
+  const message = formatSplitMessage(summary, settings, title)
   const canShare = typeof navigator !== 'undefined' && 'share' in navigator
+  const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`
 
   async function handleShare(): Promise<void> {
     try {
@@ -33,6 +35,15 @@ export function ShareBill({ summary, settings }: ShareBillProps) {
           </Button>
         )}
       </CopyButton>
+      <Button
+        variant="default"
+        component="a"
+        href={waUrl}
+        target="_blank"
+        rel="noreferrer"
+      >
+        WA
+      </Button>
       {canShare && (
         <Button
           variant="default"
